@@ -16,7 +16,7 @@ export default function AboutPage() {
   return (
     <>
       <section className="px-5 pb-8 pt-28 md:px-6 md:pt-32">
-        <div className="mx-auto max-w-[760px]">
+        <div className="mx-auto max-w-[860px]">
           <p className="eyebrow">about us</p>
           <Reveal>
             <h1 className="headline mt-4 text-4xl font-bold md:text-7xl">
@@ -34,7 +34,7 @@ export default function AboutPage() {
       </section>
 
       <section className="px-6 pb-8">
-        <Reveal className="mx-auto max-w-[760px] overflow-hidden rounded-[24px]">
+        <Reveal className="mx-auto max-w-[860px] overflow-hidden rounded-[24px]">
           <Image
             src={media.aboutHero}
             alt="Shinta team"
@@ -47,7 +47,7 @@ export default function AboutPage() {
       </section>
 
       <section className="px-5 py-12 md:px-6">
-        <div className="mx-auto grid max-w-[760px] gap-8 md:grid-cols-2">
+        <div className="mx-auto grid max-w-[860px] gap-8 md:grid-cols-2">
           <Reveal>
             <p className="eyebrow">our vision</p>
             <h2 className="mt-3 text-3xl font-semibold">What We Stand For</h2>
@@ -70,7 +70,7 @@ export default function AboutPage() {
       </section>
 
       <section className="px-5 py-8 md:px-6">
-        <div className="mx-auto max-w-[760px]">
+        <div className="mx-auto max-w-[860px]">
           <Reveal>
             <h2 className="headline text-4xl font-bold md:text-6xl">Building contents that matters</h2>
           </Reveal>
@@ -93,7 +93,7 @@ export default function AboutPage() {
       </section>
 
       <section className="px-5 py-12 md:px-6">
-        <div className="mx-auto max-w-[760px]">
+        <div className="mx-auto max-w-[860px]">
           <p className="eyebrow">Team</p>
           <h2 className="headline mt-3 text-4xl font-bold md:text-5xl">Small Team, Big Impact</h2>
           <p className="mt-4 max-w-xl text-muted">

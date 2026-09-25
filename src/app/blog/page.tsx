@@ -15,7 +15,7 @@ export default function BlogPage() {
   return (
     <>
       <section className="px-5 pb-12 pt-28 md:px-6 md:pt-32">
-        <div className="mx-auto max-w-[760px]">
+        <div className="mx-auto max-w-[860px]">
           <p className="eyebrow">blog</p>
           <h1 className="headline mt-4 text-4xl font-bold sm:text-5xl md:text-6xl">Insights & Ideas</h1>
           <p className="mt-5 max-w-2xl text-base text-muted">

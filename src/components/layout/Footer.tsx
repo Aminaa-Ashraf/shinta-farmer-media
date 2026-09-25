@@ -1,13 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { NewsletterForm } from "@/components/forms/NewsletterForm";
 import { footerLegal, footerNav, site, socials } from "@/data/site";
 import { media } from "@/data/media";
-
-const ease = [0.16, 1, 0.3, 1] as const;
 
 function FacebookIcon() {
   return (
@@ -40,23 +36,7 @@ const socialIcons = [FacebookIcon, XIcon, InstagramIcon];
 export function Footer() {
   return (
     <footer className="bg-pink">
-      <div className="mx-auto max-w-[960px] px-5 pt-6 md:px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 28 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.8, ease }}
-          className="overflow-hidden rounded-[32px] bg-white"
-        >
-          <Image
-            src={media.footerPhoto}
-            alt=""
-            width={1152}
-            height={896}
-            className="h-auto w-full object-cover"
-          />
-        </motion.div>
-
+      <div className="mx-auto max-w-[1280px] px-5 pt-6 md:px-[72px]">
         <div className="grid gap-12 pb-8 pt-14 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
             <h2 className="headline text-4xl font-bold md:text-6xl">{site.tagline}</h2>
@@ -113,9 +93,9 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="rounded-[28px] bg-[#f4f4f2] p-6">
-            <h3 className="text-3xl font-semibold">Newsletter</h3>
-            <p className="mt-3 text-sm leading-6 text-muted">
+          <div className="w-full max-w-[300px] self-start rounded-3xl bg-[#f4f4f3] p-6 md:justify-self-end">
+            <h3 className="headline text-[40px] font-bold leading-none">Newsletter</h3>
+            <p className="mt-1.5 text-[14px] leading-[1.4] text-[#78716c]">
               Sign up for our newsletter to stay up to date with the latest motion design & studio
               news
             </p>

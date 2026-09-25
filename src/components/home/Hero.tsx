@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -12,27 +12,19 @@ import { CurveTicker } from "@/components/ui/CurveTicker";
 const ease = [0.16, 1, 0.3, 1] as const;
 
 const phoneClips = [
-  { src: media.heroVideos[2], poster: media.heroPosters[2] },
-  { src: media.heroVideos[1], poster: media.heroPosters[1] },
   { src: media.heroVideos[0], poster: media.heroPosters[0] },
+  { src: media.heroVideos[1], poster: media.heroPosters[1] },
+  { src: media.heroVideos[2], poster: media.heroPosters[2] },
 ];
 
-const desktopSlots = [
-  { x: 481, y: 199, w: 354, h: 562, z: 1 },
-  { x: 514, y: 187, w: 359, h: 601, z: 2 },
-  { x: 552, y: 175, w: 360, h: 640, z: 3 },
-];
+const desktopStage = { x: 552, y: 175, w: 360, h: 640 };
+const mobileStage = { x: 50, y: 18, w: 200, h: 356 };
 
-const mobileSlots = [
-  { x: 18, y: 34, w: 200, h: 356, z: 1 },
-  { x: 34, y: 26, w: 200, h: 356, z: 2 },
-  { x: 50, y: 18, w: 200, h: 356, z: 3 },
+const deckPoses = [
+  { x: 0, y: 0, scale: 1, rotate: 0, z: 0, zIndex: 3 },
+  { x: -40, y: -8, scale: 0.95, rotate: -3, z: -40, zIndex: 2 },
+  { x: -80, y: -16, scale: 0.9, rotate: -6, z: -80, zIndex: 1 },
 ];
-
-function slotFor(phoneIndex: number, active: number, slots: typeof desktopSlots) {
-  const offset = (phoneIndex - active + phoneClips.length) % phoneClips.length;
-  return slots[slots.length - 1 - offset];
-}
 
 function PlayMark() {
   return (
@@ -45,14 +37,23 @@ function PlayMark() {
 }
 
 function SwipeControl({
+  x,
+  y,
+  visible,
   onPrev,
   onNext,
 }: {
+  x: number;
+  y: number;
+  visible: boolean;
   onPrev: () => void;
   onNext: () => void;
 }) {
   return (
-    <div className="pointer-events-auto absolute left-1/2 top-[42%] z-10 flex -translate-x-1/2 -translate-y-1/2 items-center gap-2 rounded-full bg-ink px-3 py-2 text-white shadow-[0_10px_24px_rgba(0,0,0,0.28)]">
+    <div
+      className="pointer-events-none absolute z-30 flex -translate-x-1/2 -translate-y-1/2 items-center gap-1.5 rounded-full bg-ink px-3.5 py-2 text-white shadow-[0_10px_24px_rgba(0,0,0,0.28)] transition-opacity duration-150"
+      style={{ left: x, top: y, opacity: visible ? 1 : 0 }}
+    >
       <button
         type="button"
         aria-label="Previous video"
@@ -60,7 +61,7 @@ function SwipeControl({
           e.stopPropagation();
           onPrev();
         }}
-        className="grid h-6 w-6 place-items-center"
+        className="pointer-events-auto grid h-6 w-6 place-items-center"
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
           <path d="M15 6l-6 6 6 6" strokeLinecap="round" strokeLinejoin="round" />
@@ -74,7 +75,7 @@ function SwipeControl({
           e.stopPropagation();
           onNext();
         }}
-        className="grid h-6 w-6 place-items-center"
+        className="pointer-events-auto grid h-6 w-6 place-items-center"
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
           <path d="M9 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
@@ -91,7 +92,6 @@ function HeroPhone({
   style,
   showPlay,
   playing,
-  onToggle,
 }: {
   src: string;
   poster: string;
@@ -99,7 +99,6 @@ function HeroPhone({
   style?: CSSProperties;
   showPlay?: boolean;
   playing?: boolean;
-  onToggle?: () => void;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -111,13 +110,7 @@ function HeroPhone({
   }, [playing, src]);
 
   return (
-    <button
-      type="button"
-      aria-label={playing ? "Pause hero video" : "Play hero video"}
-      onClick={onToggle}
-      className={className}
-      style={style}
-    >
+    <div className={className} style={style}>
       <video
         ref={videoRef}
         src={src}
@@ -125,80 +118,158 @@ function HeroPhone({
         muted
         loop
         playsInline
-        className="h-full w-full object-cover"
+        className="pointer-events-none h-full w-full object-cover"
       />
       {showPlay && !playing ? <PlayMark /> : null}
-    </button>
+    </div>
   );
 }
 
 function PhoneStack({
-  slots,
+  stage,
   className,
   style,
 }: {
-  slots: typeof desktopSlots;
+  stage: typeof desktopStage;
   className?: string;
   style?: CSSProperties;
 }) {
-  const [active, setActive] = useState(2);
+  const [active, setActive] = useState(0);
   const [playing, setPlaying] = useState(false);
-  const startX = useRef<number | null>(null);
+  const [hover, setHover] = useState(false);
+  const [cursor, setCursor] = useState({ x: stage.w / 2, y: stage.h * 0.16 });
+  const [dragX, setDragX] = useState(0);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const start = useRef<{ x: number; y: number; w: number } | null>(null);
+  const dragged = useRef(false);
+  const dragXRef = useRef(0);
 
   const n = phoneClips.length;
+  const applyDrag = (value: number) => {
+    dragXRef.current = value;
+    setDragX(value);
+  };
+
   const go = (dir: number) => {
     setPlaying(false);
+    applyDrag(0);
     setActive((v) => (v + dir + n) % n);
+  };
+
+  const localPoint = (e: ReactPointerEvent) => {
+    const rect = stageRef.current?.getBoundingClientRect();
+    if (!rect || rect.width === 0) return { x: stage.w / 2, y: stage.h / 2, w: stage.w };
+    return {
+      x: ((e.clientX - rect.left) / rect.width) * stage.w,
+      y: ((e.clientY - rect.top) / rect.height) * stage.h,
+      w: rect.width,
+    };
+  };
+
+  const onPointerDown = (e: ReactPointerEvent) => {
+    const p = localPoint(e);
+    start.current = { x: e.clientX, y: e.clientY, w: p.w };
+    dragged.current = false;
+    setCursor({ x: p.x, y: p.y });
+    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+  };
+
+  const onPointerMove = (e: ReactPointerEvent) => {
+    const p = localPoint(e);
+    setHover(true);
+    setCursor({ x: p.x, y: p.y });
+    if (!start.current) return;
+    const dx = ((e.clientX - start.current.x) / start.current.w) * stage.w;
+    if (Math.abs(dx) > 8) dragged.current = true;
+    if (dragged.current) applyDrag(dx);
+  };
+
+  const onPointerUp = (e: ReactPointerEvent) => {
+    const wasDrag = dragged.current;
+    const dx = dragXRef.current;
+    start.current = null;
+    dragged.current = false;
+    if (wasDrag) {
+      if (dx < -56) go(1);
+      else if (dx > 56) go(-1);
+      else applyDrag(0);
+      return;
+    }
+    applyDrag(0);
+    const target = e.target as HTMLElement;
+    if (target.closest("button[aria-label='Previous video'], button[aria-label='Next video']")) return;
+    setPlaying((v) => !v);
   };
 
   return (
     <div className={`pointer-events-none ${className ?? ""}`} style={style}>
-      {phoneClips.map((phone, i) => {
-        const slot = slotFor(i, active, slots);
-        const front = i === active;
-        return (
-          <motion.div
-            key={phone.src}
-            initial={false}
-            animate={{
-              left: slot.x,
-              top: slot.y,
-              width: slot.w,
-              height: slot.h,
-              zIndex: slot.z,
-            }}
-            transition={{ duration: 0.55, ease }}
-            className="absolute pointer-events-auto"
-            onPointerDown={(e) => {
-              startX.current = e.clientX;
-            }}
-            onPointerUp={(e) => {
-              if (startX.current === null) return;
-              const dx = e.clientX - startX.current;
-              startX.current = null;
-              if (dx > 50) go(-1);
-              else if (dx < -50) go(1);
-            }}
-          >
-            <HeroPhone
-              src={phone.src}
-              poster={phone.poster}
-              showPlay={front}
-              playing={front && playing}
-              onToggle={
-                front
-                  ? () => setPlaying((v) => !v)
-                  : () => {
-                      setPlaying(false);
-                      setActive(i);
-                    }
+      <div
+        ref={stageRef}
+        className="absolute cursor-none pointer-events-auto"
+        style={{
+          left: stage.x,
+          top: stage.y,
+          width: stage.w,
+          height: stage.h,
+          perspective: 1000,
+          transformStyle: "preserve-3d",
+        }}
+        onPointerEnter={() => setHover(true)}
+        onPointerLeave={() => {
+          if (!start.current) setHover(false);
+        }}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onPointerCancel={() => {
+          start.current = null;
+          dragged.current = false;
+          applyDrag(0);
+        }}
+      >
+        {phoneClips.map((phone, i) => {
+          const offset = (i - active + n) % n;
+          const pose = deckPoses[offset] ?? deckPoses[2];
+          const front = offset === 0;
+          return (
+            <motion.div
+              key={phone.src}
+              initial={false}
+              animate={{
+                x: pose.x + (front ? dragX : dragX * (0.18 - offset * 0.04)),
+                y: pose.y,
+                scale: pose.scale,
+                rotate: pose.rotate + (front ? dragX * 0.045 : 0),
+                rotateY: front ? dragX * -0.12 : offset * -6,
+                z: pose.z,
+                zIndex: pose.zIndex,
+              }}
+              transition={
+                start.current && dragged.current
+                  ? { type: "tween", duration: 0 }
+                  : { duration: 0.62, ease }
               }
-              className="h-full w-full overflow-hidden rounded-[28px] bg-ink shadow-[0_24px_50px_rgba(0,0,0,0.18)]"
-            />
-            {front ? <SwipeControl onPrev={() => go(-1)} onNext={() => go(1)} /> : null}
-          </motion.div>
-        );
-      })}
+              className="absolute inset-0 pointer-events-auto origin-center"
+              style={{ transformStyle: "preserve-3d" }}
+            >
+              <HeroPhone
+                src={phone.src}
+                poster={phone.poster}
+                showPlay={front && !playing && Math.abs(dragX) < 12}
+                playing={front && playing}
+                className="h-full w-full overflow-hidden rounded-[28px] bg-ink shadow-[0_24px_50px_rgba(0,0,0,0.22)]"
+              />
+            </motion.div>
+          );
+        })}
+        <SwipeControl
+          x={hover ? cursor.x : stage.w / 2}
+          y={hover ? cursor.y : stage.h * 0.16}
+          visible
+          onPrev={() => go(-1)}
+          onNext={() => go(1)}
+        />
+      </div>
     </div>
   );
 }
@@ -262,7 +333,7 @@ function DesktopHero() {
           transformOrigin: "top center",
         }}
       >
-        <CurveTicker className="absolute left-[-238px] top-[369px] h-[437px] w-[1900px]" />
+        <CurveTicker className="absolute left-[-238px] top-[369px] z-0 h-[437px] w-[1900px]" />
 
         <h1 className="headline absolute left-[72px] top-[175px] w-[448px] text-[64px] font-bold leading-none">
           UGC that
@@ -276,7 +347,7 @@ function DesktopHero() {
           <ServiceList />
         </div>
 
-        <PhoneStack slots={desktopSlots} className="absolute inset-0" />
+        <PhoneStack stage={desktopStage} className="absolute inset-0 z-[1]" />
 
         <div className="absolute left-[1052px] top-[175px] w-[300px]">
           <NewProjectCard />
@@ -308,7 +379,7 @@ function MobileHero() {
         <ServiceList />
       </div>
 
-      <PhoneStack slots={mobileSlots} className="relative mx-auto mt-10 h-[420px] w-[260px]" />
+      <PhoneStack stage={mobileStage} className="relative mx-auto mt-10 h-[420px] w-[260px]" />
 
       <div className="mt-10">
         <NewProjectCard />

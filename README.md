@@ -26,7 +26,6 @@ The official Shinta demo is a [Framer template](https://shinta.framer.media/). T
 | UI | React 19, Tailwind CSS 4 |
 | Motion | Framer Motion, Lenis |
 | Data | Static TypeScript modules — **no backend** |
-| Hosting | Vercel-ready |
 
 ## Quick start
 

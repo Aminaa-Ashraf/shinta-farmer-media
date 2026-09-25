@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useId, useRef } from "react";
 import { useAnimationFrame } from "framer-motion";
 
 const PATH =
@@ -10,23 +10,25 @@ const PHRASE =
   "SOCIAL MEDIA MANAGEMENT • SHORT FORM CONTENT • INFLUENCER MARKETING • ";
 
 export function CurveTicker({ className = "" }: { className?: string }) {
+  const pathId = useId().replace(/:/g, "");
   const pathRef = useRef<SVGTextPathElement>(null);
 
   useAnimationFrame((t) => {
     const node = pathRef.current;
     if (!node) return;
-    node.setAttribute("startOffset", `${-((t / 90) % 50)}%`);
+    node.setAttribute("startOffset", `${-((t / 220) % 50)}%`);
   });
 
   return (
     <svg
-      viewBox="-7.2 -28.7 1564.5 405.5"
+      viewBox="-7.1991 -28.74635 1564.4991 405.47935"
       preserveAspectRatio="xMidYMid meet"
-      className={`pointer-events-none h-auto w-full ${className}`}
+      overflow="hidden"
+      className={`pointer-events-none ${className}`}
       aria-hidden
     >
       <defs>
-        <path id="hero-curve-path" d={PATH} />
+        <path id={pathId} d={PATH} />
       </defs>
       <path
         d={PATH}
@@ -42,17 +44,17 @@ export function CurveTicker({ className = "" }: { className?: string }) {
           fontFamily: '"Open Sauce One", sans-serif',
           fontSize: 12,
           fontWeight: 700,
-          letterSpacing: "0.08em",
+          letterSpacing: "0.96px",
         }}
       >
         <textPath
           ref={pathRef}
-          href="#hero-curve-path"
+          href={`#${pathId}`}
           startOffset="0%"
           textAnchor="start"
           dominantBaseline="middle"
         >
-          {PHRASE.repeat(16)}
+          {PHRASE.repeat(6)}
         </textPath>
       </text>
     </svg>

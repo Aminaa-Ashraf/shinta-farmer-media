@@ -71,6 +71,14 @@ export const media = {
     img("eyiXeMBMEUOtTZVM5UbR6v4Ct7I.png?width=1194&height=1599"),
   ],
   footerPhoto: img("Ng72SfQHklNByTeJTtQUtBwT8.png?width=1152&height=896"),
+  clientLogos: {
+    rama: img("XFuGWbyySBEBlG3uqewi29JB94.png?width=877&height=533"),
+    pandawa: img("AnOBAzaJBNTsO6eVhbHxVrnUaUM.png?width=568&height=128"),
+    kresna: img("91emvUr6MxW0mmNdjgIXX7slCu8.png?width=485&height=120"),
+    sadewa: img("S6wPTNIZYXCqDeL26kzsHrnBxxQ.png?width=548&height=128"),
+    bima: img("Z7GDJBWdmNR1WwCk7f5T9FKm8mI.png?width=393&height=128"),
+    mandala: img("zi98qpLRPEfMh2jGGwmXbSyd6zg.png?width=568&height=128"),
+  },
   wordmark: img("osXTQmLx6RntsX7CfW3A94lUHo.png?width=1000&height=267"),
   madeBy: img("3J2iAobW3FSPLnwwcW1KCqr2pwM.png?width=1000&height=268"),
   missionVideos: [

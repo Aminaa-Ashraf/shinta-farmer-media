@@ -120,8 +120,8 @@ function LoopVideo({ src }: { src: string }) {
 
 export function Mission() {
   return (
-    <section className="px-5 py-12 md:px-6 md:py-20">
-      <div className="mx-auto max-w-[920px]">
+    <section className="px-5 py-16 md:px-[72px] md:py-24">
+      <div className="mx-auto max-w-[1060px]">
         <p className="eyebrow text-center">our mission</p>
         <div className="relative">
           <PinkScribble className="absolute -left-24 -top-10 hidden w-[340px] md:block" />
@@ -184,8 +184,8 @@ export function FeaturedProjects() {
   const [hero, ...rest] = featured;
 
   return (
-    <section className="px-5 py-12 md:px-6 md:py-20">
-      <div className="mx-auto max-w-[720px]">
+    <section className="px-5 py-16 md:px-[72px] md:py-24">
+      <div className="mx-auto max-w-[860px]">
         <Reveal className="text-center">
           <span className="inline-flex rounded-full bg-pink px-2 py-1 text-[11px] font-semibold uppercase tracking-[0.14em]">
             featured projects
@@ -197,7 +197,7 @@ export function FeaturedProjects() {
         <Reveal className="mt-8 md:mt-10">
           <ProjectCard project={hero} size="hero" />
         </Reveal>
-        <div className="mt-4 grid grid-cols-2 gap-3 sm:gap-4">
+        <div className="mt-6 grid grid-cols-2 gap-4 sm:gap-6">
           {rest.map((project, i) => (
             <Reveal key={project.slug} delay={i * 0.06}>
               <ProjectCard project={project} size="grid" />
@@ -299,30 +299,30 @@ function ServiceCard({
         viewport={{ once: true, amount: 0.35 }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         style={{ scale }}
-        className="w-full max-w-[860px] origin-center will-change-transform"
+        className="w-full max-w-[1060px] origin-center will-change-transform"
       >
         <div className="inline-flex rounded-tl-lg rounded-tr-[24px] bg-[#aa94ff] px-4 py-2">
           <p className="text-[12px] font-semibold uppercase tracking-[0.08em]">Service / {service.n}</p>
         </div>
-        <div className="rounded-b-[28px] rounded-tr-[28px] bg-[#aa94ff] p-5 shadow-[0_24px_60px_rgba(28,25,23,0.12)] md:p-6">
-          <div className="grid items-stretch gap-6 md:grid-cols-2 md:gap-8">
+        <div className="rounded-b-[28px] rounded-tr-[28px] bg-[#aa94ff] p-5 shadow-[0_24px_60px_rgba(28,25,23,0.12)] md:p-8">
+          <div className="grid items-stretch gap-6 md:grid-cols-2 md:gap-10">
             <div className="flex flex-col justify-between">
               <div>
-                <h2 className="headline text-[28px] font-bold leading-none md:text-[40px]">{service.title}</h2>
-                <p className="mt-3 max-w-md text-[14px] leading-6 text-ink/80 md:text-[15px]">{service.text}</p>
+                <h2 className="headline text-[28px] font-bold leading-none md:text-[48px] lg:text-[64px]">{service.title}</h2>
+                <p className="mt-4 max-w-md text-[16px] leading-7 text-ink/80">{service.text}</p>
               </div>
               <div className="mt-8">
                 <p className="headline text-4xl font-bold md:text-[52px]">{service.stat}</p>
                 <p className="mt-1 text-[16px] text-ink/70">{service.statLabel}</p>
               </div>
             </div>
-            <div className="relative aspect-[478/542] overflow-hidden rounded-[24px]">
+            <div className="relative aspect-[478/500] min-h-[280px] overflow-hidden rounded-[24px] md:aspect-auto md:min-h-[460px]">
               <Image
                 src={service.image}
                 alt={service.title}
                 fill
                 className="object-cover"
-                sizes="(min-width: 768px) 478px, 100vw"
+                sizes="(min-width: 768px) 500px, 100vw"
               />
             </div>
           </div>
@@ -344,13 +344,13 @@ export function Services() {
 
 export function Comparison() {
   return (
-    <section className="px-5 py-12 md:px-6 md:py-20">
-      <Reveal className="mx-auto max-w-[720px] text-center">
+    <section className="px-5 py-16 md:px-[72px] md:py-24">
+      <Reveal className="mx-auto max-w-[800px] text-center">
         <h2 className="headline text-[32px] font-bold sm:text-[40px] md:text-[56px]">Don’t settle for less</h2>
       </Reveal>
-      <div className="mx-auto mt-8 grid max-w-[720px] gap-3 md:grid-cols-2 md:gap-4">
+      <div className="mx-auto mt-10 grid max-w-[800px] gap-5 md:grid-cols-2">
         <Reveal>
-          <div className="lift-card min-h-[240px] rounded-[22px] bg-white p-5 md:p-6">
+          <div className="lift-card min-h-[287px] rounded-[22px] bg-white p-6 md:p-8">
             <h3 className="text-[18px] font-semibold text-faint">Other Agencies</h3>
             <ul className="mt-4 space-y-1.5 text-[15px] leading-8 text-muted">
               {comparison.others.map((item) => (
@@ -360,7 +360,7 @@ export function Comparison() {
           </div>
         </Reveal>
         <Reveal delay={0.08}>
-          <div className="lift-card min-h-[240px] rounded-[22px] bg-pink p-5 md:p-6">
+          <div className="lift-card min-h-[287px] rounded-[22px] bg-pink p-6 md:p-8">
             <h3 className="text-[18px] font-semibold">Shinta</h3>
             <ul className="mt-4 space-y-1.5 text-[15px] leading-8">
               {comparison.shinta.map((item) => (
@@ -419,24 +419,24 @@ function ProcessIcon({ name }: { name: (typeof processSteps)[number]["icon"] }) 
 
 export function Process() {
   return (
-    <section className="px-5 py-12 md:px-6 md:py-16">
-      <div className="mx-auto max-w-[960px]">
+    <section className="px-5 py-16 md:px-[88px] md:py-24">
+      <div className="mx-auto max-w-[1264px]">
         <p className="eyebrow">our process</p>
         <h2 className="headline mt-3 max-w-[720px] text-[32px] font-bold sm:text-[40px] md:text-[52px]">
           From strategy to scroll-stopping content.
         </h2>
-        <div className="mt-8 grid gap-3 sm:grid-cols-2 xl:grid-cols-4 xl:gap-4">
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-4 xl:gap-10">
           {processSteps.map((step, i) => (
             <Reveal key={step.n} delay={i * 0.08}>
               <article
-                className="lift-card flex h-[320px] flex-col rounded-[24px] p-1.5"
+                className="lift-card flex h-[403px] flex-col rounded-[24px] p-1.5"
                 style={{ background: step.color }}
               >
                 <div className="flex items-center justify-between rounded-full bg-[#f4f4f3] px-4 py-2.5">
                   <span className="headline text-[22px] font-bold leading-none">{step.n}</span>
                   <ProcessIcon name={step.icon} />
                 </div>
-                <div className="mt-auto px-3 pb-3">
+                <div className="mt-auto px-4 pb-4">
                   <h3 className="headline text-[28px] font-bold leading-none md:text-[32px]">{step.title}</h3>
                   <p className="mt-2 max-w-[220px] text-[13px] leading-5 text-ink/75">{step.text}</p>
                 </div>
@@ -451,30 +451,30 @@ export function Process() {
 
 export function Testimonials() {
   return (
-    <section className="px-5 py-12 md:px-6 md:py-16">
-      <div className="mx-auto max-w-[760px]">
+    <section className="px-5 py-16 md:px-[72px] md:py-24">
+      <div className="mx-auto max-w-[1100px]">
         <p className="eyebrow">testimonials</p>
         <h2 className="headline mt-3 text-[32px] font-bold sm:text-[40px] md:text-[52px]">Trusted by 40+ Companies</h2>
-        <Reveal className="mt-8">
-          <PlayableVideo
-            src={media.testimonialVideo}
-            poster={media.testimonialPoster}
-            className="h-[220px] rounded-[22px] sm:h-[300px] md:h-[380px] md:rounded-[28px]"
-          />
-        </Reveal>
-        <div className="mt-8 grid gap-3 md:grid-cols-2">
+        <div className="mt-10 flex flex-wrap justify-center gap-5">
+          <Reveal className="w-full max-w-[216px] sm:w-[216px]">
+            <PlayableVideo
+              src={media.testimonialVideo}
+              poster={media.testimonialPoster}
+              className="h-[371px] rounded-[22px]"
+            />
+          </Reveal>
           {testimonials.map((t, i) => (
-            <Reveal key={t.name} delay={i * 0.04}>
-              <article className="lift-card h-full rounded-[22px] bg-white p-5">
+            <Reveal key={t.name} delay={i * 0.04} className="w-full max-w-[283px] sm:w-[283px]">
+              <article className="lift-card flex h-full min-h-[371px] flex-col rounded-[22px] bg-white p-6">
                 <h3 className="text-[17px] font-semibold">{t.title}</h3>
                 <p className="mt-3 text-[14px] leading-6 text-muted">“{t.quote}”</p>
-                <div className="mt-6 flex items-center gap-3">
+                <div className="mt-auto flex items-center gap-3 pt-6">
                   <Image
                     src={t.image}
                     alt={t.name}
-                    width={44}
-                    height={44}
-                    className="h-11 w-11 rounded-full object-cover"
+                    width={58}
+                    height={58}
+                    className="h-[58px] w-[58px] rounded-full object-cover"
                   />
                   <div>
                     <p className="font-medium">{t.name}</p>
@@ -490,32 +490,34 @@ export function Testimonials() {
   );
 }
 
+const teamHeights = [226, 215, 215, 215, 200, 215];
+
 export function TeamPreview() {
   return (
-    <section className="px-5 py-12 md:px-6 md:py-16">
-      <div className="mx-auto max-w-[760px]">
+    <section className="px-5 py-16 md:px-[72px] md:py-24">
+      <div className="mx-auto max-w-[1100px]">
         <p className="eyebrow">our team</p>
         <div className="mt-3 flex flex-wrap items-end justify-between gap-4">
-          <h2 className="headline max-w-xl text-[32px] font-bold sm:text-[40px] md:text-[52px]">The Content Experts</h2>
+          <h2 className="headline max-w-[700px] text-[32px] font-bold sm:text-[40px] md:text-[52px]">The Content Experts</h2>
           <Button href="/about-us">More About Us</Button>
         </div>
         <p className="mt-3 max-w-lg text-muted">
           Shinta helped us turn ideas into consistent, high-performing social content.
         </p>
-        <div className="mt-8 flex items-end justify-start overflow-x-auto pb-2 md:mt-10 md:justify-center md:overflow-visible">
+        <div className="mt-10 flex items-end justify-start overflow-x-auto pb-2 md:justify-center md:overflow-visible">
           {team.map((member, i) => (
-            <Reveal key={member.name} delay={i * 0.04} className={i > 0 ? "-ml-5 md:-ml-6" : ""}>
-              <article className="group w-[96px] shrink-0 md:w-[128px]">
+            <Reveal key={member.name} delay={i * 0.04} className={i > 0 ? "-ml-6 md:-ml-8" : ""}>
+              <article className="group w-[150px] shrink-0 md:w-[197px]" style={{ marginBottom: i % 2 ? 0 : 24 }}>
                 <div
-                  className="relative overflow-hidden rounded-[16px] bg-white shadow-[0_18px_40px_rgba(0,0,0,0.14)] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-2 group-hover:z-10"
-                  style={{ height: 140 + ((i + 1) % 3) * 22 }}
+                  className="relative overflow-hidden rounded-[18px] bg-white shadow-[0_18px_40px_rgba(0,0,0,0.14)] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:z-10 group-hover:-translate-y-2"
+                  style={{ height: teamHeights[i] }}
                 >
                   <Image
                     src={member.image}
                     alt={member.name}
                     fill
                     className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
-                    sizes="160px"
+                    sizes="197px"
                   />
                 </div>
               </article>
@@ -531,8 +533,8 @@ export function Pricing() {
   const [yearly, setYearly] = useState(false);
 
   return (
-    <section className="px-5 py-12 md:px-6 md:py-16">
-      <div className="mx-auto max-w-[760px]">
+    <section className="px-5 py-16 md:px-[72px] md:py-24">
+      <div className="mx-auto max-w-[800px]">
         <p className="eyebrow">pricing</p>
         <h2 className="headline mt-3 text-[32px] font-bold sm:text-[40px] md:text-[52px]">Flexible pricing for every stage</h2>
         <div className="mt-8 flex items-center gap-3">
@@ -552,11 +554,11 @@ export function Pricing() {
           </button>
           <span className="eyebrow text-[#ac459d]">save 20%</span>
         </div>
-        <div className="mx-auto mt-8 grid max-w-[640px] gap-3 md:grid-cols-2">
+        <div className="mx-auto mt-10 grid max-w-[716px] gap-6 md:grid-cols-2">
           {plans.map((plan) => (
             <article
               key={plan.name}
-              className={`lift-card flex min-h-[360px] flex-col rounded-[24px] p-2.5 ${plan.popular ? "bg-ink text-white" : "bg-white"}`}
+              className={`lift-card flex min-h-[427px] flex-col rounded-[24px] p-2.5 ${plan.popular ? "bg-ink text-white" : "bg-white"}`}
             >
               <div className={`rounded-[24px] p-4 ${plan.popular ? "bg-white/10" : "bg-[#f4f4f3]"}`}>
                 <div className="flex items-center justify-between">
@@ -598,8 +600,8 @@ export function Pricing() {
 
 export function BlogPreview() {
   return (
-    <section className="px-5 py-12 md:px-6 md:py-16">
-      <div className="mx-auto max-w-[760px]">
+    <section className="px-5 py-16 md:px-[72px] md:py-24">
+      <div className="mx-auto max-w-[1035px]">
         <p className="eyebrow">Blog</p>
         <div className="mt-3 flex flex-wrap items-end justify-between gap-4">
           <h2 className="headline text-[32px] font-bold sm:text-[40px] md:text-[52px]">Insights & Ideas</h2>
@@ -607,11 +609,11 @@ export function BlogPreview() {
             More Articles
           </Button>
         </div>
-        <div className="mt-8 grid gap-4 md:grid-cols-3">
+        <div className="mt-10 grid gap-6 md:grid-cols-3">
           {posts.slice(0, 3).map((post) => (
             <Reveal key={post.slug}>
               <Link href={`/blog/${post.slug}`} className="group block">
-                <div className="relative aspect-[4/3] overflow-hidden rounded-[18px]">
+                <div className="relative aspect-[329/248] overflow-hidden rounded-[18px]">
                   <Image
                     src={post.image}
                     alt={post.title}
@@ -636,8 +638,8 @@ export function FAQ() {
   const [open, setOpen] = useState(0);
 
   return (
-    <section className="px-5 py-12 md:px-6 md:py-16">
-      <div className="mx-auto max-w-[640px]">
+    <section className="px-5 py-16 md:px-[72px] md:py-24">
+      <div className="mx-auto max-w-[720px]">
         <h2 className="headline text-[32px] font-bold sm:text-[40px] md:text-[52px]">FAQ</h2>
         <div className="mt-8 divide-y divide-line">
           {faqs.map((item, i) => (
@@ -673,17 +675,43 @@ export function FAQ() {
 
 export function FinalCta() {
   return (
-    <section className="px-5 pb-12 md:px-6 md:pb-16">
-      <Reveal className="mx-auto max-w-[760px] rounded-[24px] bg-ink px-5 py-10 text-center text-white sm:rounded-[28px] sm:px-8 sm:py-12 md:px-12">
-        <h2 className="headline text-[32px] font-bold sm:text-[40px] md:text-[52px]">Let’s grow thorough content!</h2>
-        <p className="mx-auto mt-5 max-w-xl text-white/70">
-          Shinta helps brands create content that earns attention, builds engagement, and drives real
-          growth.
-        </p>
-        <div className="mx-auto mt-8 max-w-md">
-          <CtaPill href="/contact" accent="white">
-            Book a call
-          </CtaPill>
+    <section className="px-5 pb-16 md:px-[72px] md:pb-24">
+      <Reveal className="mx-auto flex max-w-[1296px] flex-col items-stretch gap-4 md:flex-row md:items-center md:gap-8">
+        <div className="relative overflow-hidden rounded-[24px] bg-ink px-7 py-12 text-white sm:rounded-[32px] sm:px-10 sm:py-14 md:w-[min(100%,520px)] md:shrink-0">
+          <svg
+            viewBox="0 0 420 90"
+            fill="none"
+            aria-hidden
+            className="pointer-events-none absolute left-0 top-6 w-[78%] max-w-[340px]"
+          >
+            <path
+              d="M12 58C72 8 132 78 198 34C248 2 292 62 348 28C372 16 396 22 408 30"
+              stroke="#ffa8f2"
+              strokeWidth="8"
+              strokeLinecap="round"
+            />
+          </svg>
+          <h2 className="headline relative mt-8 max-w-[285px] text-[36px] font-bold sm:text-[48px] md:text-[56px]">
+            Let’s grow thorough content!
+          </h2>
+          <p className="relative mt-5 max-w-[320px] text-[15px] leading-6 text-white/70">
+            Shinta helps brands create content that earns attention, builds engagement, and drives real
+            growth.
+          </p>
+          <div className="relative mt-8 max-w-[280px]">
+            <CtaPill href="/contact" accent="white">
+              Book a call
+            </CtaPill>
+          </div>
+        </div>
+        <div className="relative min-h-[280px] flex-1 overflow-hidden rounded-[24px] sm:rounded-[32px] md:min-h-[510px]">
+          <Image
+            src={media.footerPhoto}
+            alt=""
+            fill
+            className="object-cover object-center"
+            sizes="(min-width: 768px) 675px, 100vw"
+          />
         </div>
       </Reveal>
     </section>

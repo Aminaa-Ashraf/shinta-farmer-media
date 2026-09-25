@@ -18,8 +18,8 @@ export function ProjectCard({
       <article
         className={`relative h-full overflow-hidden bg-ink/5 ${
           hero
-            ? "aspect-[3/4] rounded-[24px] sm:rounded-[32px]"
-            : "aspect-[4/5] rounded-[20px] sm:rounded-[24px]"
+            ? "aspect-[860/911] rounded-[24px] sm:rounded-[32px]"
+            : "aspect-[418/443] rounded-[20px] sm:rounded-[24px]"
         }`}
       >
         <Image
@@ -27,7 +27,7 @@ export function ProjectCard({
           alt={project.name}
           fill
           className="object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform group-hover:scale-[1.06]"
-          sizes={hero ? "(min-width: 768px) 720px, 100vw" : "(min-width: 768px) 340px, 50vw"}
+          sizes={hero ? "(min-width: 768px) 860px, 100vw" : "(min-width: 768px) 418px, 50vw"}
         />
 
         <div

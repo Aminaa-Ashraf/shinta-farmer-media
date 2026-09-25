@@ -16,6 +16,7 @@ export type Project = {
   result: string;
   stats: { value: string; label: string }[];
   image: string;
+  logo: string;
   video: string;
   liveUrl: string;
   gallery: MediaItem[];
@@ -46,6 +47,7 @@ export const projects: Project[] = [
       { value: "3x", label: "ROAS increase" },
     ],
     image: media.projects.rama,
+    logo: media.clientLogos.rama,
     video: "https://framerusercontent.com/assets/jMhtqxySVyb8SvXhtvmPY0VkSA.mp4",
     liveUrl: "https://rama.framer.media/",
     gallery: [
@@ -83,6 +85,7 @@ export const projects: Project[] = [
       { value: "3x", label: "Product Sign-ups" },
     ],
     image: media.projects.pandawa,
+    logo: media.clientLogos.pandawa,
     video: "https://framerusercontent.com/assets/VJBu5xpeJGPwyT7Pz79ShCDr0r0.mp4",
     liveUrl: "https://pandawa.framer.ai/",
     gallery: [
@@ -120,6 +123,7 @@ export const projects: Project[] = [
       { value: "3x", label: "Product Sign-ups" },
     ],
     image: media.projects.kresna,
+    logo: media.clientLogos.kresna,
     video: "https://framerusercontent.com/assets/iClEtUErlHwffZchF6QB5Sj9NY.mp4",
     liveUrl: "https://kresna.framer.ai/",
     gallery: [
@@ -157,6 +161,7 @@ export const projects: Project[] = [
       { value: "3x", label: "ROAS increase" },
     ],
     image: media.projects.sadewa,
+    logo: media.clientLogos.sadewa,
     video: "https://framerusercontent.com/assets/fVFvhIbQo5Uji0TOfFtpgXudM.mp4",
     liveUrl: "https://sadewa.framer.website/",
     gallery: [
@@ -194,6 +199,7 @@ export const projects: Project[] = [
       { value: "3x", label: "ROAS increase" },
     ],
     image: media.projects.bima,
+    logo: media.clientLogos.bima,
     video: "https://framerusercontent.com/assets/SqA27eI48XerrU381O6WzPbXPpw.mp4",
     liveUrl: "https://bima.framer.media/",
     gallery: [
@@ -231,6 +237,7 @@ export const projects: Project[] = [
       { value: "3x", label: "ROAS increase" },
     ],
     image: media.projects.mandala,
+    logo: media.clientLogos.mandala,
     video: "https://framerusercontent.com/assets/asHJJ7eTcYaYOIYA1rMQIT5KAnU.mp4",
     liveUrl: "https://mandala.framer.website/",
     gallery: [

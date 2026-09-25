@@ -15,7 +15,7 @@ export default function ProjectsPage() {
   return (
     <>
       <section className="px-5 pb-12 pt-28 md:px-6 md:pt-32">
-        <div className="mx-auto max-w-[760px]">
+        <div className="mx-auto max-w-[860px]">
           <span className="inline-flex rounded-full bg-pink px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-ink">
             Works
           </span>
