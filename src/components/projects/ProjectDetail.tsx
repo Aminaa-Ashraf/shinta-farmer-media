@@ -96,9 +96,9 @@ export function ProjectDetail({
   return (
     <>
       <article className="overflow-x-hidden pb-12 pt-28 md:pt-32">
-        <section className="px-5 md:px-[72px]">
-          <div className="mx-auto flex max-w-[1296px] flex-col gap-10 md:flex-row md:items-start md:justify-between md:gap-10">
-            <div className="w-full max-w-[490px] shrink-0">
+        <section className="px-5 md:px-18">
+          <div className="mx-auto flex max-w-324 flex-col gap-10 md:flex-row md:items-start md:justify-between md:gap-10">
+            <div className="w-full max-w-122.5 shrink-0">
               <motion.span
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -126,10 +126,10 @@ export function ProjectDetail({
                 transition={{ duration: 0.5, delay: 0.08, ease }}
                 className="group mt-8 inline-flex items-center gap-2"
               >
-                <span className="rounded-full border border-ink bg-white px-8 py-[17px] text-[15px] font-medium transition group-hover:bg-[#fafafa]">
+                <span className="rounded-full border border-ink bg-white px-8 py-4.25 text-[15px] font-medium transition group-hover:bg-[#fafafa]">
                   Live preview
                 </span>
-                <span className="grid h-[57px] w-[57px] place-items-center rounded-full border border-ink bg-white text-ink transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-0.5 group-hover:translate-x-1">
+                <span className="grid h-14.25 w-14.25 place-items-center rounded-full border border-ink bg-white text-ink transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-0.5 group-hover:translate-x-1">
                   <ArrowIcon />
                 </span>
               </motion.a>
@@ -140,7 +140,7 @@ export function ProjectDetail({
                 transition={{ duration: 0.6, delay: 0.16, ease }}
                 className="mt-16 flex flex-wrap gap-x-6 gap-y-8 sm:mt-20"
               >
-                <div className="min-w-[88px]">
+                <div className="min-w-22">
                   <dt className="eyebrow text-[11px] text-faint">Client</dt>
                   <dd className="mt-3">
                     <Image
@@ -148,11 +148,11 @@ export function ProjectDetail({
                       alt={project.name}
                       width={200}
                       height={50}
-                      className="h-[50px] w-auto object-contain object-left"
+                      className="h-12.5 w-auto object-contain object-left"
                     />
                   </dd>
                 </div>
-                <div className="min-w-[160px] max-w-[297px]">
+                <div className="min-w-40 max-w-74.25">
                   <dt className="eyebrow text-[11px] text-faint">Services</dt>
                   <dd className="mt-2 space-y-0.5 text-[17px] font-medium leading-snug">
                     {project.services.map((s) => (
@@ -160,7 +160,7 @@ export function ProjectDetail({
                     ))}
                   </dd>
                 </div>
-                <div className="min-w-[45px]">
+                <div className="min-w-11.25">
                   <dt className="eyebrow text-[11px] text-faint">Year</dt>
                   <dd className="mt-2 text-[17px] font-medium">{project.year}</dd>
                 </div>
@@ -171,31 +171,31 @@ export function ProjectDetail({
               initial={{ opacity: 0, scale: 0.97, filter: "blur(12px)" }}
               animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
               transition={{ duration: 0.75, delay: 0.12, ease }}
-              className="w-full max-w-[686px]"
+              className="w-full max-w-171.5"
             >
               <PlayableVideo
                 src={project.video}
                 poster={project.image}
-                className="aspect-[686/651] rounded-[24px] sm:rounded-[32px]"
+                className="aspect-686/651 rounded-3xl sm:rounded-4xl"
               />
             </motion.div>
           </div>
         </section>
 
-        <section className="px-5 py-20 md:px-[72px] md:py-28">
-          <SectionReveal className="mx-auto max-w-[770px] text-center">
+        <section className="px-5 py-20 md:px-18 md:py-28">
+          <SectionReveal className="mx-auto max-w-192.5 text-center">
             <p className="eyebrow text-faint">The Challenges</p>
             <h2 className="headline mt-3 text-[32px] font-bold sm:text-[48px] md:text-[64px]">
               {project.challengeTitle}
             </h2>
-            <p className="mx-auto mt-6 max-w-[616px] text-[17px] leading-7 text-muted">
+            <p className="mx-auto mt-6 max-w-154 text-[17px] leading-7 text-muted">
               {project.challenge}
             </p>
           </SectionReveal>
         </section>
 
-        <section className="px-5 md:px-[72px]">
-          <div className="mx-auto max-w-[1296px]">
+        <section className="px-5 md:px-18">
+          <div className="mx-auto max-w-324">
             <SectionReveal>
               <p className="eyebrow text-faint">our approach</p>
               <div className="mt-3 grid items-start gap-6 md:grid-cols-[minmax(0,620px)_minmax(0,496px)] md:justify-between md:gap-12">
@@ -206,18 +206,18 @@ export function ProjectDetail({
               </div>
             </SectionReveal>
 
-            <div className="mt-12 grid grid-cols-3 items-start gap-2 sm:mt-16 sm:gap-6 lg:gap-[72px]">
+            <div className="mt-12 grid grid-cols-3 items-start gap-2 sm:mt-16 sm:gap-6 lg:gap-18">
               {trio.map((item, i) => (
                 <SectionReveal
                   key={`${item.src}-${i}`}
                   delay={i * 0.06}
-                  className={i === 0 ? "mt-10 sm:mt-16 lg:mt-[126px]" : i === 1 ? "mt-5 sm:mt-8 lg:mt-[63px]" : ""}
+                  className={i === 0 ? "mt-10 sm:mt-16 lg:mt-31.5" : i === 1 ? "mt-5 sm:mt-8 lg:mt-15.75" : ""}
                 >
                   <MediaFrame
                     item={item}
                     aspect="329 / 584"
                     sizes="(min-width: 1024px) 329px, 33vw"
-                    className="rounded-[20px] sm:rounded-[24px]"
+                    className="rounded-5 sm:rounded-3xl"
                   />
                 </SectionReveal>
               ))}
@@ -225,20 +225,20 @@ export function ProjectDetail({
           </div>
         </section>
 
-        <section className="px-5 pt-20 md:px-[72px] md:pt-28">
-          <div className="mx-auto flex max-w-[1296px] flex-col gap-10 md:flex-row md:items-start md:justify-between">
-            <SectionReveal className="w-full max-w-[624px]">
+        <section className="px-5 pt-20 md:px-18 md:pt-28">
+          <div className="mx-auto flex max-w-324 flex-col gap-10 md:flex-row md:items-start md:justify-between">
+            <SectionReveal className="w-full max-w-156">
               <p className="eyebrow text-faint">the result</p>
               <h2 className="headline mt-3 text-[32px] font-bold sm:text-[48px] md:text-[64px]">
                 {project.resultTitle}
               </h2>
-              <p className="mt-6 max-w-[499px] text-[17px] leading-7 text-muted">{project.result}</p>
+              <p className="mt-6 max-w-124.75 text-[17px] leading-7 text-muted">{project.result}</p>
 
-              <div className="mt-10 flex flex-wrap gap-4 sm:gap-[48px]">
+              <div className="mt-10 flex flex-wrap gap-4 sm:gap-12">
                 {project.stats.map((stat, i) => (
                   <div
                     key={stat.label}
-                    className="w-[162px] rounded-2xl px-4 py-5"
+                    className="w-40.5 rounded-2xl px-4 py-5"
                     style={{ backgroundColor: statColors[i % statColors.length] }}
                   >
                     <p className="headline text-[40px] font-bold">{stat.value}</p>
@@ -249,27 +249,27 @@ export function ProjectDetail({
             </SectionReveal>
 
             {resultShot && (
-              <SectionReveal delay={0.08} className="w-full max-w-[599px]">
+              <SectionReveal delay={0.08} className="w-full max-w-149.75">
                 <MediaFrame
                   item={resultShot}
                   aspect="599 / 649"
                   sizes="(min-width: 1024px) 599px, 100vw"
-                  className="rounded-[24px] sm:rounded-[32px]"
+                  className="rounded-3xl sm:rounded-4xl"
                 />
               </SectionReveal>
             )}
           </div>
         </section>
 
-        <section className="px-5 pt-16 md:px-[72px] md:pt-20">
-          <div className="mx-auto grid max-w-[770px] grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-x-[48px] sm:gap-y-8">
+        <section className="px-5 pt-16 md:px-18 md:pt-20">
+          <div className="mx-auto grid max-w-192.5 grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-x-12 sm:gap-y-8">
             <div className="flex flex-col gap-8">
               {lowerLeft.map((item, i) => (
                 <SectionReveal key={`${item.src}-${i}`}>
                   <MediaFrame
                     item={item}
                     sizes="(min-width: 768px) 330px, 100vw"
-                    className="rounded-[20px] sm:rounded-[24px]"
+                    className="rounded-5 sm:rounded-3xl"
                   />
                 </SectionReveal>
               ))}
@@ -280,7 +280,7 @@ export function ProjectDetail({
                   <MediaFrame
                     item={item}
                     sizes="(min-width: 768px) 330px, 100vw"
-                    className="rounded-[20px] sm:rounded-[24px]"
+                    className="rounded-5 sm:rounded-3xl"
                   />
                 </SectionReveal>
               ))}
@@ -288,8 +288,8 @@ export function ProjectDetail({
           </div>
         </section>
 
-        <section className="px-5 pt-20 md:px-[72px] md:pt-28">
-          <div className="mx-auto max-w-[1296px]">
+        <section className="px-5 pt-20 md:px-18 md:pt-28">
+          <div className="mx-auto max-w-324">
             <div className="flex flex-wrap items-end justify-between gap-4">
               <h2 className="headline text-[32px] font-bold sm:text-[48px] md:text-[64px]">
                 Check Other Projects
