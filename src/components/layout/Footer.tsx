@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { NewsletterForm } from "@/components/forms/NewsletterForm";
 import { footerLegal, footerNav, site, socials } from "@/data/site";
 import { media } from "@/data/media";
@@ -93,8 +94,8 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="w-full max-w-[300px] self-start rounded-3xl bg-[#f4f4f3] p-6 md:justify-self-end">
-            <h3 className="headline text-[40px] font-bold leading-none">Newsletter</h3>
+          <div className="w-full max-w-[300px] self-start rounded-3xl bg-[#f4f4f3] p-5 sm:p-6 md:justify-self-end">
+            <h3 className="headline text-[32px] font-bold leading-none sm:text-[40px]">Newsletter</h3>
             <p className="mt-1.5 text-[14px] leading-[1.4] text-[#78716c]">
               Sign up for our newsletter to stay up to date with the latest motion design & studio
               news
@@ -104,14 +105,14 @@ export function Footer() {
         </div>
 
         <div className="overflow-hidden pb-6 pt-8">
-          <img src={media.wordmark} alt="Shinta" className="h-auto w-full" />
+          <Image src={media.wordmark} alt="Shinta" width={1000} height={267} className="h-auto w-full" />
         </div>
 
         <div className="flex flex-col items-center justify-between gap-3 border-t border-ink/10 py-6 text-center text-[11px] font-semibold uppercase tracking-[0.14em] text-ink/70 md:flex-row md:text-left">
           <p>© 2026 Shinta. All Rights Reserved.</p>
           <p className="flex items-center gap-2">
             Made by
-            <img src={media.madeBy} alt="Velox Themes" className="h-5 w-auto" />
+            <Image src={media.madeBy} alt="Velox Themes" width={100} height={27} className="h-5 w-auto" />
           </p>
         </div>
       </div>

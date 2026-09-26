@@ -206,7 +206,7 @@ export function ProjectDetail({
               </div>
             </SectionReveal>
 
-            <div className="mt-12 grid grid-cols-3 items-start gap-3 sm:mt-16 sm:gap-6 lg:gap-[72px]">
+            <div className="mt-12 grid grid-cols-3 items-start gap-2 sm:mt-16 sm:gap-6 lg:gap-[72px]">
               {trio.map((item, i) => (
                 <SectionReveal
                   key={`${item.src}-${i}`}

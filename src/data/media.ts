@@ -55,6 +55,8 @@ export const media = {
     img("HdP9iBKnVQ0lF1SX37cXdSc.jpg?width=388&height=690"),
     img("kIgTrrpKuzeZcJwAbzBc17wV6MM.jpg?width=388&height=690"),
   ],
+  aboutCollage: img("JqqvWFwSCdI8Dk0bBfoedZXhuUk.jpg?width=604&height=454"),
+  aboutCollageWide: img("evhfk0zl2rQQgVSe0xwEdKnVuqk.jpg?width=504&height=378"),
   team: [
     img("zcV8VMLW2UaiLm9AJM8MPiwdlw.jpg?width=790&height=936"),
     img("o6duUa9OkHlf9DhOgeIlWNcRGY.jpg?width=790&height=936"),
@@ -109,8 +111,13 @@ export const media = {
     img("cNhxMCAtBg1pCkLonOn6wBwPzA.jpg?width=822&height=616"),
     img("r2x5juiviagvZesFV13a9pVaR4.jpg?width=822&height=616"),
     img("LjqUtvyQXNfWUeK0iqaOyoetDg.jpg?width=822&height=616"),
-    img("j2SDQqAkQ3arXM8IQ1jnCBB6S0.png?width=1200&height=1200"),
-    img("QJRZerULrXfNrY08IEi5N1xnB0.png?width=800&height=800"),
-    img("3TCXEPjCw7AbpdVqOwb0J3keQNA.png?width=1032&height=1032"),
+    img("vrsTB9iCMqt035VA9x2UzaBTWY.jpg?width=822&height=616"),
+    img("hFtuQt4dJrspgu3oorlstBaf7BI.jpg?width=822&height=616"),
+    img("F0HhyUWRZDTVCNjXeLfuEqNYpkk.jpg?width=822&height=616"),
   ],
+  authors: {
+    kristanto: img("j2SDQqAkQ3arXM8IQ1jnCBB6S0.png?width=1200&height=1200"),
+    budi: img("QJRZerULrXfNrY08IEi5N1xnB0.png?width=800&height=800"),
+    karina: img("3TCXEPjCw7AbpdVqOwb0J3keQNA.png?width=1032&height=1032"),
+  },
 };

@@ -52,6 +52,7 @@ export const viewport: Viewport = {
   themeColor: "#1c1917",
   width: "device-width",
   initialScale: 1,
+  viewportFit: "cover",
 };
 
 const jsonLd = {
@@ -77,7 +78,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <PageLoader />
         <Providers>
           <Navbar />
-          <main>{children}</main>
+          <main className="overflow-x-hidden">{children}</main>
           <Footer />
         </Providers>
       </body>

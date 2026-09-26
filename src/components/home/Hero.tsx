@@ -118,6 +118,7 @@ function HeroPhone({
         muted
         loop
         playsInline
+        preload="metadata"
         className="pointer-events-none h-full w-full object-cover"
       />
       {showPlay && !playing ? <PlayMark /> : null}
@@ -139,6 +140,7 @@ function PhoneStack({
   const [hover, setHover] = useState(false);
   const [cursor, setCursor] = useState({ x: stage.w / 2, y: stage.h * 0.16 });
   const [dragX, setDragX] = useState(0);
+  const [dragging, setDragging] = useState(false);
   const stageRef = useRef<HTMLDivElement>(null);
   const start = useRef<{ x: number; y: number; w: number } | null>(null);
   const dragged = useRef(false);
@@ -180,7 +182,10 @@ function PhoneStack({
     setCursor({ x: p.x, y: p.y });
     if (!start.current) return;
     const dx = ((e.clientX - start.current.x) / start.current.w) * stage.w;
-    if (Math.abs(dx) > 8) dragged.current = true;
+    if (Math.abs(dx) > 8) {
+      dragged.current = true;
+      setDragging(true);
+    }
     if (dragged.current) applyDrag(dx);
   };
 
@@ -189,6 +194,7 @@ function PhoneStack({
     const dx = dragXRef.current;
     start.current = null;
     dragged.current = false;
+    setDragging(false);
     if (wasDrag) {
       if (dx < -56) go(1);
       else if (dx > 56) go(-1);
@@ -205,7 +211,7 @@ function PhoneStack({
     <div className={`pointer-events-none ${className ?? ""}`} style={style}>
       <div
         ref={stageRef}
-        className="absolute cursor-none pointer-events-auto"
+        className="absolute cursor-grab pointer-events-auto touch-none active:cursor-grabbing lg:cursor-none"
         style={{
           left: stage.x,
           top: stage.y,
@@ -216,7 +222,7 @@ function PhoneStack({
         }}
         onPointerEnter={() => setHover(true)}
         onPointerLeave={() => {
-          if (!start.current) setHover(false);
+          if (!dragging) setHover(false);
         }}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
@@ -224,6 +230,7 @@ function PhoneStack({
         onPointerCancel={() => {
           start.current = null;
           dragged.current = false;
+          setDragging(false);
           applyDrag(0);
         }}
       >
@@ -245,7 +252,7 @@ function PhoneStack({
                 zIndex: pose.zIndex,
               }}
               transition={
-                start.current && dragged.current
+                dragging
                   ? { type: "tween", duration: 0 }
                   : { duration: 0.62, ease }
               }
@@ -367,7 +374,7 @@ function DesktopHero() {
 
 function MobileHero() {
   return (
-    <div className="px-5 pb-10 pt-28 lg:hidden">
+    <div className="overflow-hidden px-5 pb-10 pt-28 lg:hidden">
       <h1 className="headline text-[40px] font-bold leading-[0.95] sm:text-[52px]">
         UGC that
         <br />
@@ -379,7 +386,13 @@ function MobileHero() {
         <ServiceList />
       </div>
 
-      <PhoneStack stage={mobileStage} className="relative mx-auto mt-10 h-[420px] w-[260px]" />
+      <div className="relative mx-auto mt-8 w-full max-w-[300px]">
+        <CurveTicker className="absolute left-1/2 top-[18%] z-0 h-[200px] w-[170%] -translate-x-1/2" />
+        <PhoneStack
+          stage={mobileStage}
+          className="relative z-[1] mx-auto h-[min(68vw,420px)] w-[min(70vw,260px)]"
+        />
+      </div>
 
       <div className="mt-10">
         <NewProjectCard />

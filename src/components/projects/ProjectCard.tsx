@@ -35,10 +35,10 @@ export function ProjectCard({
             hero ? "sm:gap-1.5" : ""
           }`}
         >
-          <div className="flex min-h-8 min-w-0 flex-1 items-center gap-1.5 rounded-full bg-[#f4f4f3] px-3.5 py-1.5 sm:min-h-[33px] sm:px-4">
-            <h2 className="shrink-0 text-[15px] font-bold leading-none sm:text-[18px]">{project.name}</h2>
-            <span className="text-[13px] leading-none text-faint">/</span>
-            <p className="min-w-0 truncate text-[10px] font-semibold uppercase tracking-[0.08em] text-ink sm:text-[11px]">
+          <div className="flex min-h-8 min-w-0 flex-1 items-center gap-1 rounded-full bg-[#f4f4f3] px-2.5 py-1.5 sm:min-h-[33px] sm:gap-1.5 sm:px-4">
+            <h2 className="shrink-0 text-[13px] font-bold leading-none sm:text-[18px]">{project.name}</h2>
+            <span className="hidden text-[13px] leading-none text-faint min-[400px]:inline">/</span>
+            <p className="hidden min-w-0 truncate text-[10px] font-semibold uppercase tracking-[0.08em] text-ink min-[400px]:block sm:text-[11px]">
               <span>{project.metric}</span> {project.metricLabel}
             </p>
           </div>

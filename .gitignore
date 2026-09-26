@@ -8,3 +8,4 @@ AGENTS.md
 CLAUDE.md
 .cursor/
 *.pen
+*.tsbuildinfo

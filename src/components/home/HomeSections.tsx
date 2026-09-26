@@ -250,9 +250,9 @@ export function SeeMoreWorks() {
 
       <Link
         href="/projects"
-        className="group relative z-10 flex h-full items-center justify-center gap-3 px-5 text-ink"
+        className="group relative z-10 flex h-full flex-wrap items-center justify-center gap-3 px-5 text-center text-ink"
       >
-        <h2 className="headline text-[36px] font-bold transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-x-1 sm:text-[48px] md:text-[64px]">
+        <h2 className="headline text-[28px] font-bold transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-x-1 sm:text-[48px] md:text-[64px]">
           See More Works
         </h2>
         <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-pink text-ink transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:bg-pink-2 sm:h-12 sm:w-12">
@@ -604,7 +604,7 @@ export function BlogPreview() {
       <div className="mx-auto max-w-[1035px]">
         <p className="eyebrow">Blog</p>
         <div className="mt-3 flex flex-wrap items-end justify-between gap-4">
-          <h2 className="headline text-[32px] font-bold sm:text-[40px] md:text-[52px]">Insights & Ideas</h2>
+          <h2 className="headline text-[32px] font-bold sm:text-[40px] md:text-[52px]">Insight & Ideas</h2>
           <Button href="/blog" variant="ghost">
             More Articles
           </Button>
@@ -724,10 +724,12 @@ export function LogoMarquee() {
     <div className="overflow-hidden border-y border-line py-5">
       <div className="marquee-track flex w-max items-center gap-16">
         {logos.map((src, i) => (
-          <img
+          <Image
             key={`${src}-${i}`}
             src={src}
             alt="Brand partner"
+            width={160}
+            height={32}
             className="h-6 w-auto opacity-70 sm:h-8"
           />
         ))}

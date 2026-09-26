@@ -50,12 +50,14 @@
 }
 
 html {
-  background: #1c1917;
+  background: var(--bg);
 }
 
 html,
 body {
   color: var(--ink);
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 body {

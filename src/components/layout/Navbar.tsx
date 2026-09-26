@@ -31,7 +31,7 @@ export function Navbar() {
         initial={false}
         animate={{ y: hidden ? "-130%" : "0%", opacity: hidden ? 0 : 1 }}
         transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-        className="pointer-events-none fixed inset-x-0 top-4 z-50 flex justify-center px-4 md:px-6"
+        className="pointer-events-none fixed inset-x-0 top-[max(1rem,env(safe-area-inset-top))] z-50 flex justify-center px-4 md:px-6"
       >
         <div
           className={`relative flex w-full max-w-[1280px] items-center justify-between rounded-full bg-ink px-2 py-1.5 pl-4 text-white shadow-[0_12px_40px_rgba(0,0,0,0.18)] md:px-3 md:pl-5 ${
@@ -88,7 +88,7 @@ export function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40 bg-bg/95 pt-28 backdrop-blur-md lg:hidden"
+            className="fixed inset-0 z-40 overflow-y-auto bg-bg/95 pt-[calc(7rem+env(safe-area-inset-top))] backdrop-blur-md lg:hidden"
           >
             <div className="mx-auto flex max-w-xl flex-col gap-2 px-8">
               {navLinks.map((link, i) => (
