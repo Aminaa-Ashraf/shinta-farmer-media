@@ -78,7 +78,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <PageLoader />
         <Providers>
           <Navbar />
-          <main className="overflow-x-hidden">{children}</main>
+          <main className="overflow-x-clip">{children}</main>
           <Footer />
         </Providers>
       </body>

@@ -56,7 +56,7 @@ html {
 html,
 body {
   color: var(--ink);
-  overflow-x: hidden;
+  overflow-x: clip;
   max-width: 100%;
 }
 

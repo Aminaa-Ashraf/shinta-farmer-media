@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useMotionValue } from "framer-motion";
 import { useLenis } from "lenis/react";
 import { Reveal } from "@/components/ui/Reveal";
@@ -64,29 +64,53 @@ function PainToast({ text, width }: { text: string; width: string }) {
   );
 }
 
+function clamp01(n: number) {
+  return Math.min(1, Math.max(0, n));
+}
+
 export function PainPoints() {
   const ref = useRef<HTMLElement>(null);
   const blackOpacity = useMotionValue(0);
   const color = useMotionValue("#1c1917");
 
-  useLenis(() => {
+  const syncTheme = () => {
     const el = ref.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
     const progress = -rect.top / Math.max(1, el.offsetHeight - window.innerHeight);
-    const t = Math.min(1, Math.max(0, (progress - 0.04) / 0.12));
+    const enter = clamp01(progress / 0.08);
+    const leave = clamp01((progress - 0.82) / 0.12);
+    const t = Math.min(enter, 1 - leave);
     blackOpacity.set(t);
     color.set(mixInk(t));
-  });
+  };
+
+  useLenis(syncTheme);
+
+  useEffect(() => {
+    const run = () => syncTheme();
+    run();
+    window.addEventListener("scroll", run, { passive: true });
+    window.addEventListener("resize", run);
+    return () => {
+      window.removeEventListener("scroll", run);
+      window.removeEventListener("resize", run);
+    };
+    // Motion values and the section ref stay stable for the page lifetime.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
-    <section ref={ref} className="relative overflow-clip">
+    <section ref={ref} className="relative">
+      <motion.div
+        aria-hidden
+        className="pointer-events-none fixed inset-0 z-[1] bg-[#1c1917]"
+        style={{ opacity: blackOpacity }}
+      />
       <div className="sticky top-0 z-[1] flex h-screen items-center justify-center">
-        <div className="absolute inset-0 bg-[#f4f4f3]" />
-        <motion.div className="absolute inset-0 bg-[#1c1917]" style={{ opacity: blackOpacity }} />
         <motion.h2
           style={{ color }}
-          className="headline relative z-10 max-w-[600px] px-5 text-center text-[32px] font-bold sm:text-[40px] md:text-[64px]"
+          className="headline relative max-w-[600px] px-5 text-center text-[32px] font-bold sm:text-[40px] md:text-[64px]"
         >
           Social media feels harder than it should be
         </motion.h2>
