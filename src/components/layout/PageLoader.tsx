@@ -26,7 +26,7 @@ export function PageLoader() {
     <AnimatePresence>
       {show && (
         <motion.div
-          className={`fixed inset-0 z-[300] ${tone === "ink" ? "bg-ink" : "bg-bg"}`}
+          className={`pointer-events-none fixed inset-0 z-[300] ${tone === "ink" ? "bg-ink" : "bg-bg"}`}
           initial={{ opacity: 1 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}

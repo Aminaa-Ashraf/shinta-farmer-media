@@ -11,10 +11,11 @@ import { navLinks } from "@/data/site";
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const [hovered, setHovered] = useState(false);
   const pathname = usePathname();
 
   useLenis(({ scroll, direction }) => {
-    if (open) {
+    if (open || hovered) {
       setHidden(false);
       return;
     }
@@ -34,13 +35,13 @@ export function Navbar() {
         className="pointer-events-none fixed inset-x-0 top-[max(1rem,env(safe-area-inset-top))] z-50 flex justify-center px-4 md:px-6"
       >
         <div
-          className={`relative flex w-full max-w-[1280px] items-center justify-between rounded-full bg-ink px-2 py-1.5 pl-4 text-white shadow-[0_12px_40px_rgba(0,0,0,0.18)] md:px-3 md:pl-5 ${
-            hidden ? "pointer-events-none" : "pointer-events-auto"
-          }`}
+          onPointerEnter={() => setHovered(true)}
+          onPointerLeave={() => setHovered(false)}
+          className="pointer-events-auto relative flex w-full max-w-[1280px] items-center justify-between rounded-full bg-ink px-2 py-1.5 pl-4 text-white shadow-[0_12px_40px_rgba(0,0,0,0.18)] md:px-3 md:pl-5"
         >
           <Logo inverted />
 
-          <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-10 lg:flex">
+          <nav className="pointer-events-auto absolute left-1/2 z-10 hidden -translate-x-1/2 items-center gap-8 lg:flex xl:gap-10">
             {navLinks.map((link) => {
               const active = pathname === link.href || pathname.startsWith(`${link.href}/`);
               return (
@@ -57,7 +58,7 @@ export function Navbar() {
             })}
           </nav>
 
-          <div className="flex items-center gap-2">
+          <div className="relative z-20 flex items-center gap-2">
             <Link
               href="/contact"
               className="hidden rounded-full bg-white px-5 py-2.5 text-[16px] font-semibold tracking-[-0.04em] text-ink transition hover:bg-pink lg:inline-flex"
