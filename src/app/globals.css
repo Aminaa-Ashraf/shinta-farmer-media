@@ -127,13 +127,13 @@ body {
 
 .lift-card {
   transition:
-    transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.7s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .lift-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 22px 48px rgba(28, 25, 23, 0.1);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(28, 25, 23, 0.08);
 }
 
 @media (prefers-reduced-motion: reduce) {

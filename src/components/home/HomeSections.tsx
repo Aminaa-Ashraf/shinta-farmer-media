@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useMotionValue } from "framer-motion";
+import { AnimatePresence, motion, useMotionValue, type MotionValue } from "framer-motion";
 import { useLenis } from "lenis/react";
 import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
@@ -42,11 +42,11 @@ function mixInk(t: number) {
 function PainToast({ text, width }: { text: string; width: string }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 36, scale: 0.94, filter: "blur(8px)" }}
-      whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-      viewport={{ once: false, amount: 0.45 }}
-      transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-      className={`${width} min-h-[155px] rounded-2xl bg-[#44403c] p-6 shadow-[0_18px_40px_rgba(0,0,0,0.18)]`}
+      initial={{ opacity: 0, y: 28 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.4, margin: "-8% 0px" }}
+      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+      className={`${width} min-h-38.75 rounded-2xl bg-muted p-6 shadow-[0_10px_24px_rgba(0,0,0,0.16)]`}
     >
       <svg width="32" height="32" viewBox="0 0 16 16" aria-hidden className="mb-2.5 block">
         <circle cx="8" cy="8" r="8" fill="#ffa952" />
@@ -57,7 +57,7 @@ function PainToast({ text, width }: { text: string; width: string }) {
           strokeLinecap="round"
         />
       </svg>
-      <p className="whitespace-pre-line text-[18px] font-bold leading-[1.15] text-[#f4f4f3] md:text-[24px]">
+      <p className="whitespace-pre-line text-[18px] font-bold leading-[1.15] text-bg md:text-[24px]">
         {text}
       </p>
     </motion.div>
@@ -68,27 +68,30 @@ function clamp01(n: number) {
   return Math.min(1, Math.max(0, n));
 }
 
+function syncPainTheme(
+  el: HTMLElement | null,
+  blackOpacity: MotionValue<number>,
+  color: MotionValue<string>,
+) {
+  if (!el) return;
+  const rect = el.getBoundingClientRect();
+  const progress = -rect.top / Math.max(1, el.offsetHeight - window.innerHeight);
+  const enter = clamp01(progress / 0.08);
+  const leave = clamp01((progress - 0.82) / 0.12);
+  const t = Math.min(enter, 1 - leave);
+  blackOpacity.set(t);
+  color.set(mixInk(t));
+}
+
 export function PainPoints() {
   const ref = useRef<HTMLElement>(null);
   const blackOpacity = useMotionValue(0);
   const color = useMotionValue("#1c1917");
 
-  const syncTheme = () => {
-    const el = ref.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const progress = -rect.top / Math.max(1, el.offsetHeight - window.innerHeight);
-    const enter = clamp01(progress / 0.08);
-    const leave = clamp01((progress - 0.82) / 0.12);
-    const t = Math.min(enter, 1 - leave);
-    blackOpacity.set(t);
-    color.set(mixInk(t));
-  };
-
-  useLenis(syncTheme);
+  useLenis(() => syncPainTheme(ref.current, blackOpacity, color));
 
   useEffect(() => {
-    const run = () => syncTheme();
+    const run = () => syncPainTheme(ref.current, blackOpacity, color);
     run();
     window.addEventListener("scroll", run, { passive: true });
     window.addEventListener("resize", run);
@@ -96,15 +99,13 @@ export function PainPoints() {
       window.removeEventListener("scroll", run);
       window.removeEventListener("resize", run);
     };
-    // Motion values and the section ref stay stable for the page lifetime.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [blackOpacity, color]);
 
   return (
     <section ref={ref} className="relative">
       <motion.div
         aria-hidden
-        className="pointer-events-none fixed inset-0 z-[1] bg-[#1c1917]"
+        className="pointer-events-none fixed inset-0 z-[1] bg-ink"
         style={{ opacity: blackOpacity }}
       />
       <div className="sticky top-0 z-[1] flex h-screen items-center justify-center">
@@ -116,7 +117,7 @@ export function PainPoints() {
         </motion.h2>
       </div>
 
-      <div className="relative z-[2] mx-auto w-full max-w-[1280px] px-6 md:px-[72px]">
+      <div className="relative z-[2] mx-auto w-full max-w-[1280px] px-6 md:px-18">
         {painItems.map((item) => (
           <div key={item.text} className={`flex h-[220px] md:h-[280px] ${item.row}`}>
             <PainToast text={item.text} width={item.width} />
@@ -144,7 +145,7 @@ function LoopVideo({ src }: { src: string }) {
 
 export function Mission() {
   return (
-    <section className="px-5 py-16 md:px-[72px] md:py-24">
+    <section className="px-5 py-16 md:px-18 md:py-24">
       <div className="mx-auto max-w-[1060px]">
         <p className="eyebrow text-center">our mission</p>
         <div className="relative">
@@ -158,7 +159,7 @@ export function Mission() {
 
         <div className="mt-12 grid items-center gap-8 md:mt-16 md:grid-cols-[minmax(0,280px)_minmax(0,1fr)] md:gap-10">
           <Reveal className="relative mx-auto w-full max-w-[280px] min-w-0 md:mx-0">
-            <div className="relative aspect-[9/16] w-full overflow-hidden rounded-[24px] bg-ink/5">
+            <div className="relative aspect-[9/16] w-full overflow-hidden rounded-3xl bg-ink/5">
               <LoopVideo src={media.missionVideos[0]} />
             </div>
             <div className="absolute bottom-4 left-0 w-[min(100%,220px)] rounded-2xl bg-pink px-5 py-4 md:-left-3">
@@ -189,7 +190,7 @@ export function Mission() {
             </p>
           </Reveal>
           <Reveal delay={0.08} className="relative mx-auto w-full max-w-[380px] min-w-0 md:mx-0">
-            <div className="relative aspect-[461/281] w-full overflow-hidden rounded-[24px] bg-ink/5">
+            <div className="relative aspect-[461/281] w-full overflow-hidden rounded-3xl bg-ink/5">
               <LoopVideo src={media.missionVideos[1]} />
             </div>
             <div className="absolute -bottom-3 -right-1 rounded-2xl bg-purple px-5 py-4">
@@ -208,7 +209,7 @@ export function FeaturedProjects() {
   const [hero, ...rest] = featured;
 
   return (
-    <section className="px-5 py-16 md:px-[72px] md:py-24">
+    <section className="px-5 py-16 md:px-18 md:py-24">
       <div className="mx-auto max-w-[860px]">
         <Reveal className="text-center">
           <span className="inline-flex rounded-full bg-pink px-2 py-1 text-[11px] font-semibold uppercase tracking-[0.14em]">
@@ -255,7 +256,7 @@ export function SeeMoreWorks() {
                 style={{ width: shot.w, height: shot.h, marginLeft: -shot.w / 2, marginTop: -shot.h / 2 }}
               >
                 <div
-                  className="relative h-full w-full overflow-hidden rounded-[24px] bg-ink/5 shadow-[0_18px_40px_rgba(0,0,0,0.12)]"
+                  className="relative h-full w-full overflow-hidden rounded-3xl bg-ink/5 shadow-[0_18px_40px_rgba(0,0,0,0.12)]"
                   style={{ transform: `rotate(${worksTilt[i]}deg)` }}
                 >
                   <Image
@@ -318,17 +319,17 @@ function ServiceCard({
       style={{ zIndex: index + 1 }}
     >
       <motion.div
-        initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
-        whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.35 }}
-        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
         style={{ scale }}
         className="w-full max-w-[1060px] origin-center will-change-transform"
       >
-        <div className="inline-flex rounded-tl-lg rounded-tr-[24px] bg-[#aa94ff] px-4 py-2">
+        <div className="inline-flex rounded-tl-lg rounded-tr-3xl bg-purple px-4 py-2">
           <p className="text-[12px] font-semibold uppercase tracking-[0.08em]">Service / {service.n}</p>
         </div>
-        <div className="rounded-b-[28px] rounded-tr-[28px] bg-[#aa94ff] p-5 shadow-[0_24px_60px_rgba(28,25,23,0.12)] md:p-8">
+        <div className="rounded-b-[28px] rounded-tr-[28px] bg-purple p-5 shadow-[0_24px_60px_rgba(28,25,23,0.12)] md:p-8">
           <div className="grid items-stretch gap-6 md:grid-cols-2 md:gap-10">
             <div className="flex flex-col justify-between">
               <div>
@@ -340,7 +341,7 @@ function ServiceCard({
                 <p className="mt-1 text-[16px] text-ink/70">{service.statLabel}</p>
               </div>
             </div>
-            <div className="relative aspect-[478/500] min-h-[280px] overflow-hidden rounded-[24px] md:aspect-auto md:min-h-[460px]">
+            <div className="relative aspect-[478/500] min-h-[280px] overflow-hidden rounded-3xl md:aspect-auto md:min-h-[460px]">
               <Image
                 src={service.image}
                 alt={service.title}
@@ -368,7 +369,7 @@ export function Services() {
 
 export function Comparison() {
   return (
-    <section className="px-5 py-16 md:px-[72px] md:py-24">
+    <section className="px-5 py-16 md:px-18 md:py-24">
       <Reveal className="mx-auto max-w-[800px] text-center">
         <h2 className="headline text-[32px] font-bold sm:text-[40px] md:text-[56px]">Don’t settle for less</h2>
       </Reveal>
@@ -443,7 +444,7 @@ function ProcessIcon({ name }: { name: (typeof processSteps)[number]["icon"] }) 
 
 export function Process() {
   return (
-    <section className="px-5 py-16 md:px-[88px] md:py-24">
+    <section className="px-5 py-16 md:px-22 md:py-24">
       <div className="mx-auto max-w-[1264px]">
         <p className="eyebrow">our process</p>
         <h2 className="headline mt-3 max-w-[720px] text-[32px] font-bold sm:text-[40px] md:text-[52px]">
@@ -453,10 +454,10 @@ export function Process() {
           {processSteps.map((step, i) => (
             <Reveal key={step.n} delay={i * 0.08}>
               <article
-                className="lift-card flex h-[403px] flex-col rounded-[24px] p-1.5"
+                className="lift-card flex h-[403px] flex-col rounded-3xl p-1.5"
                 style={{ background: step.color }}
               >
-                <div className="flex items-center justify-between rounded-full bg-[#f4f4f3] px-4 py-2.5">
+                <div className="flex items-center justify-between rounded-full bg-bg px-4 py-2.5">
                   <span className="headline text-[22px] font-bold leading-none">{step.n}</span>
                   <ProcessIcon name={step.icon} />
                 </div>
@@ -475,7 +476,7 @@ export function Process() {
 
 export function Testimonials() {
   return (
-    <section className="px-5 py-16 md:px-[72px] md:py-24">
+    <section className="px-5 py-16 md:px-18 md:py-24">
       <div className="mx-auto max-w-[1100px]">
         <p className="eyebrow">testimonials</p>
         <h2 className="headline mt-3 text-[32px] font-bold sm:text-[40px] md:text-[52px]">Trusted by 40+ Companies</h2>
@@ -518,7 +519,7 @@ const teamHeights = [226, 215, 215, 215, 200, 215];
 
 export function TeamPreview() {
   return (
-    <section className="px-5 py-16 md:px-[72px] md:py-24">
+    <section className="px-5 py-16 md:px-18 md:py-24">
       <div className="mx-auto max-w-[1100px]">
         <p className="eyebrow">our team</p>
         <div className="mt-3 flex flex-wrap items-end justify-between gap-4">
@@ -557,7 +558,7 @@ export function Pricing() {
   const [yearly, setYearly] = useState(false);
 
   return (
-    <section className="px-5 py-16 md:px-[72px] md:py-24">
+    <section className="px-5 py-16 md:px-18 md:py-24">
       <div className="mx-auto max-w-[800px]">
         <p className="eyebrow">pricing</p>
         <h2 className="headline mt-3 text-[32px] font-bold sm:text-[40px] md:text-[52px]">Flexible pricing for every stage</h2>
@@ -582,9 +583,9 @@ export function Pricing() {
           {plans.map((plan) => (
             <article
               key={plan.name}
-              className={`lift-card flex min-h-[427px] flex-col rounded-[24px] p-2.5 ${plan.popular ? "bg-ink text-white" : "bg-white"}`}
+              className={`lift-card flex min-h-[427px] flex-col rounded-3xl p-2.5 ${plan.popular ? "bg-ink text-white" : "bg-white"}`}
             >
-              <div className={`rounded-[24px] p-4 ${plan.popular ? "bg-white/10" : "bg-[#f4f4f3]"}`}>
+              <div className={`rounded-3xl p-4 ${plan.popular ? "bg-white/10" : "bg-bg"}`}>
                 <div className="flex items-center justify-between">
                   <h3 className="text-[22px] font-semibold">{plan.name}</h3>
                   {plan.popular && <span className="eyebrow text-pink">popular</span>}
@@ -624,7 +625,7 @@ export function Pricing() {
 
 export function BlogPreview() {
   return (
-    <section className="px-5 py-16 md:px-[72px] md:py-24">
+    <section className="px-5 py-16 md:px-18 md:py-24">
       <div className="mx-auto max-w-[1035px]">
         <p className="eyebrow">Blog</p>
         <div className="mt-3 flex flex-wrap items-end justify-between gap-4">
@@ -662,7 +663,7 @@ export function FAQ() {
   const [open, setOpen] = useState(0);
 
   return (
-    <section className="px-5 py-16 md:px-[72px] md:py-24">
+    <section className="px-5 py-16 md:px-18 md:py-24">
       <div className="mx-auto max-w-[720px]">
         <h2 className="headline text-[32px] font-bold sm:text-[40px] md:text-[52px]">FAQ</h2>
         <div className="mt-8 divide-y divide-line">
@@ -699,9 +700,9 @@ export function FAQ() {
 
 export function FinalCta() {
   return (
-    <section className="px-5 pb-16 md:px-[72px] md:pb-24">
+    <section className="px-5 pb-16 md:px-18 md:pb-24">
       <Reveal className="mx-auto flex max-w-[1296px] flex-col items-stretch gap-4 md:flex-row md:items-center md:gap-8">
-        <div className="relative overflow-hidden rounded-[24px] bg-ink px-7 py-12 text-white sm:rounded-[32px] sm:px-10 sm:py-14 md:w-[min(100%,520px)] md:shrink-0">
+        <div className="relative overflow-hidden rounded-3xl bg-ink px-7 py-12 text-white sm:rounded-4xl sm:px-10 sm:py-14 md:w-[min(100%,520px)] md:shrink-0">
           <svg
             viewBox="0 0 420 90"
             fill="none"
@@ -728,7 +729,7 @@ export function FinalCta() {
             </CtaPill>
           </div>
         </div>
-        <div className="relative min-h-[280px] flex-1 overflow-hidden rounded-[24px] sm:rounded-[32px] md:min-h-[510px]">
+        <div className="relative min-h-[280px] flex-1 overflow-hidden rounded-3xl sm:rounded-4xl md:min-h-[510px]">
           <Image
             src={media.footerPhoto}
             alt=""
